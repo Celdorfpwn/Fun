@@ -31,18 +31,25 @@ namespace TrelloHashAlgorithmSolution
         static void Main(string[] args)
         {
             var decode = new StringBuilder().Decode(914117715920704).ToString();
+            var decodeRecursive = DecodeRecursive(914117715920704);
             Console.WriteLine(decode);
+            Console.WriteLine(decodeRecursive);
             Console.ReadKey();
+        }
+
+        // RECURSIVE
+        public static string DecodeRecursive(Int64 hash)
+        {
+            return hash > 7 ? (DecodeRecursive(hash / 37) + ("acdegilmnoprstuw").ElementAt(Convert.ToInt32(hash % 37))) : String.Empty;
         }
     }
 
+    // USING EXTENSION
     internal static class Extensions
     {
-        private static string Letters = "acdegilmnoprstuw";
-
         public static StringBuilder Decode(this StringBuilder builder, Int64 hash)
         {
-            return hash > 7 ? builder.Decode(hash / 37).Append(Letters.ElementAt(Convert.ToInt32(hash % 37))) : builder;
+            return hash > 7 ? builder.Decode(hash / 37).Append(("acdegilmnoprstuw").ElementAt(Convert.ToInt32(hash % 37))) : builder;
         }
     }
 }
